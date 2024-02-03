@@ -54,14 +54,31 @@ def get_ship_coordinates():
         ship_coordinates.append((row, col))
     return ship_coordinates
 
+def validate_ship_coordinates(ship_coordinates, grid):
+    """
+    Takes in ship co-ordinates and validates them
+    """
+    for row, col in ship_coordinates:
+        if row < 1 or row > 5 or col not in ["A", "B", "C", "D", "E"]:
+            print("Invalid co-ordinates, try again")
+            get_ship_coordinates()
+    for row, col in ship_coordinates:
+        grid[row - 1][ord(col) - 65] = ship_symbol
+    print("Ships placed!")
+    print(grid)
+    return grid
+
+
 
 def main_loop():
     """
     Handles the main game loop
     """
     game_intro_message()
-    print_player_grid()
-    get_ship_coordinates()
+    grid = print_player_grid()
+    ship_coordinates = get_ship_coordinates()
+    validate_ship_coordinates(ship_coordinates, grid)
+
 
 
 
