@@ -43,7 +43,14 @@ def print_player_grid():
         print()
     print("Player 1, place your ships!")
 
-game_intro_message()
-print_player_grid()
+
+def main_loop():
+    """
+    Handles the main game loop
+    """
+    game_intro_message()
+    print_player_grid()
+
+main_loop()
 
 
