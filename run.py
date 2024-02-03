@@ -6,7 +6,6 @@ ship_num = 3
 ship_symbol = "S"
 hit_symbol = "X"
 miss_symbol = "O"
-empty_symbol = "-"
 
 
 def game_intro_message():
@@ -17,7 +16,6 @@ def game_intro_message():
     print("Column co-ordinates go from left to right")
     print("Row co-ordinates go from top to bottom")
     print("The Board is a 5x5 grid, Starting at the top left at Co-ordinate: row: 1, column: A")
-    print('Co-Ordinates should be typed in the format "A1, B2, C3" ect')
     print("Each player had 3 ships each")
     print("First to sink all enemy ships wins!")
     print("To replay the game, select run program")
@@ -42,6 +40,19 @@ def print_player_grid():
             print(cell, end=" ")
         print()
     print("Player 1, place your ships!")
+    return grid
+
+def get_ship_coordinates():
+    """
+    Takes in player input to generate ship co-ordinates
+    """
+    ship_coordinates = []
+    for i in range(ship_num):
+        print(f"Enter co-ordinates for ship {i + 1}")
+        row = int(input("Enter row number: "))
+        col = input("Enter column letter: ").upper()
+        ship_coordinates.append((row, col))
+    return ship_coordinates
 
 
 def main_loop():
@@ -50,6 +61,9 @@ def main_loop():
     """
     game_intro_message()
     print_player_grid()
+    get_ship_coordinates()
+
+
 
 main_loop()
 
