@@ -28,54 +28,82 @@ def print_player_grid():
     """
     Generates Players empty grid for placing ships
     """
-    grid = [["-" for _ in range(5)] for _ in range(5)]
+    player_grid = [["-" for _ in range(5)] for _ in range(5)]
 
     print(" ", end=" ") 
     for col in col_labels:
         print(col, end=" ")
     print() 
-    for i, row in enumerate(grid):
+    for i, row in enumerate(player_grid):
         print(row_labels[i], end=" ")
         for cell in row:
             print(cell, end=" ")
         print()
     print("Player 1, place your ships!")
-    return grid
+    return player_grid
 
 def get_ship_coordinates():
     """
     Takes in player input to generate ship co-ordinates
     """
-    ship_coordinates = []
+    player_ship_coordinates = []
     for i in range(ship_num):
         print(f"Enter co-ordinates for ship {i + 1}")
         row = int(input("Enter row number: "))
         col = input("Enter column letter: ").upper()
-        ship_coordinates.append((row, col))
-    return ship_coordinates
+        player_ship_coordinates.append((row, col))
+    return player_ship_coordinates
 
-def validate_ship_coordinates(ship_coordinates, grid, col_labels, row_labels):
+def validate_ship_coordinates(player_ship_coordinates, player_grid, col_labels, row_labels):
     """
     Takes in ship co-ordinates and validates them and prints the grid with ships placed
     """
-    for row, col in ship_coordinates:
+    for row, col in player_ship_coordinates:
         row_index = row - 1
         col_index = ord(col) - 65
-        if grid[row_index][col_index] == ship_symbol:
+        if player_grid[row_index][col_index] == ship_symbol:
             print("You already have a ship there!")
             get_ship_coordinates()
-        grid[row_index][col_index] = ship_symbol
+        player_grid[row_index][col_index] = ship_symbol
     print("Ships placed!")
     print(" ", end=" ") 
     for col in col_labels:
         print(col, end=" ")
     print() 
-    for i, row in enumerate(grid):
+    for i, row in enumerate(player_grid):
         print(row_labels[i], end=" ")
         for cell in row:
             print(cell, end=" ")
         print()
-    return grid
+    return player_grid
+
+
+
+def generate_cpu_ships(col_labels, row_labels):
+    """
+    Generates CPU ships and places them on the grid but not visible to the player
+    """
+    cpu_grid = [["-" for _ in range(5)] for _ in range(5)]
+    # Create a new grid to store the shots
+    shot_grid = [["-" for _ in range(5)] for _ in range(5)]
+    for i in range(ship_num):
+        row = randint(1, 5)
+        col = randint(0, 4)
+        if cpu_grid[row - 1][col] == ship_symbol:
+            continue
+        cpu_grid[row - 1][col] = ship_symbol
+    
+    # Print the shot grid instead of the cpu grid
+    print(" ", end=" ") 
+    for col in col_labels:
+        print(col, end=" ")
+    print() 
+    for i, row in enumerate(shot_grid):
+        print(row_labels[i], end=" ")
+        for cell in row:
+            print(cell, end=" ")
+        print()
+    return cpu_grid, shot_grid 
 
 
 
@@ -84,9 +112,11 @@ def main_loop():
     Handles the main game loop
     """
     game_intro_message()
-    grid = print_player_grid()
-    ship_coordinates = get_ship_coordinates()
-    validate_ship_coordinates(ship_coordinates, grid, col_labels, row_labels)
+    player_grid = print_player_grid()
+    player_ship_coordinates = get_ship_coordinates()
+    validate_ship_coordinates(player_ship_coordinates, player_grid, col_labels, row_labels)
+    generate_cpu_ships(col_labels, row_labels)
+
 
 
 
