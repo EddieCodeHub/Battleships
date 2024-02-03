@@ -106,6 +106,17 @@ def generate_cpu_ships(col_labels, row_labels):
     return cpu_grid, shot_grid 
 
 
+def get_player_guess():
+    """
+    Takes in player input to generate guesses and print appropriate symbols on the grid
+    """
+    print("Enter your guess!")
+    row = int(input("Enter row number: "))
+    col = input("Enter column letter: ").upper()
+    player_guess = (row, col)
+    return player_guess
+
+
 
 def main_loop():
     """
@@ -116,6 +127,7 @@ def main_loop():
     player_ship_coordinates = get_ship_coordinates()
     validate_ship_coordinates(player_ship_coordinates, player_grid, col_labels, row_labels)
     generate_cpu_ships(col_labels, row_labels)
+    get_player_guess()
 
 
 
