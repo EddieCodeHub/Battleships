@@ -2,7 +2,8 @@
 from random import randint
 
 # Create Variables to generate game 
-ship_num = 3
+player_ship_num = 3
+cpu_ship_num = 3
 ship_symbol = "S"
 hit_symbol = "X"
 miss_symbol = "O"
@@ -117,6 +118,29 @@ def get_player_guess():
     return player_guess
 
 
+def validate_player_guess(player_guess, cpu_grid, shot_grid, col_labels, row_labels):
+    """
+    Takes in player guess and validates them and prints the grid with hits and misses
+    """
+    row, col = player_guess
+    row_index = row - 1
+    col_index = ord(col) - 65
+    if cpu_grid[row_index][col_index] == ship_symbol:
+        print("Hit!")
+        shot_grid[row_index][col_index] = hit_symbol
+    else:
+        print("Miss!")
+        shot_grid[row_index][col_index] = miss_symbol
+    print(" ", end=" ") 
+    for col in col_labels:
+        print(col, end=" ")
+    print() 
+    for i, row in enumerate(shot_grid):
+        print(row_labels[i], end=" ")
+        for cell in row:
+            print(cell, end=" ")
+        print()
+    return shot_grid
 
 def main_loop():
     """
@@ -126,8 +150,9 @@ def main_loop():
     player_grid = print_player_grid()
     player_ship_coordinates = get_ship_coordinates()
     validate_ship_coordinates(player_ship_coordinates, player_grid, col_labels, row_labels)
-    generate_cpu_ships(col_labels, row_labels)
-    get_player_guess()
+    cpu_grid, shot_grid = generate_cpu_ships(col_labels, row_labels)
+    player_guess = get_player_guess()
+    validate_player_guess(player_guess, cpu_grid, shot_grid, col_labels, row_labels)
 
 
 
