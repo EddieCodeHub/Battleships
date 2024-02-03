@@ -6,6 +6,8 @@ ship_num = 3
 ship_symbol = "S"
 hit_symbol = "X"
 miss_symbol = "O"
+row_labels = [1, 2, 3, 4, 5]
+col_labels = ["A", "B", "C", "D", "E"]
 
 
 def game_intro_message():
@@ -25,9 +27,7 @@ def game_intro_message():
 def print_player_grid():
     """
     Generates Players empty grid for placing ships
-    """ 
-    row_labels = [1, 2, 3, 4, 5]
-    col_labels = ["A", "B", "C", "D", "E"]
+    """
     grid = [["-" for _ in range(5)] for _ in range(5)]
 
     print(" ", end=" ") 
@@ -54,18 +54,27 @@ def get_ship_coordinates():
         ship_coordinates.append((row, col))
     return ship_coordinates
 
-def validate_ship_coordinates(ship_coordinates, grid):
+def validate_ship_coordinates(ship_coordinates, grid, col_labels, row_labels):
     """
-    Takes in ship co-ordinates and validates them
+    Takes in ship co-ordinates and validates them and prints the grid with ships placed
     """
     for row, col in ship_coordinates:
-        if row < 1 or row > 5 or col not in ["A", "B", "C", "D", "E"]:
-            print("Invalid co-ordinates, try again")
+        row_index = row - 1
+        col_index = ord(col) - 65
+        if grid[row_index][col_index] == ship_symbol:
+            print("You already have a ship there!")
             get_ship_coordinates()
-    for row, col in ship_coordinates:
-        grid[row - 1][ord(col) - 65] = ship_symbol
+        grid[row_index][col_index] = ship_symbol
     print("Ships placed!")
-    print(grid)
+    print(" ", end=" ") 
+    for col in col_labels:
+        print(col, end=" ")
+    print() 
+    for i, row in enumerate(grid):
+        print(row_labels[i], end=" ")
+        for cell in row:
+            print(cell, end=" ")
+        print()
     return grid
 
 
@@ -77,7 +86,7 @@ def main_loop():
     game_intro_message()
     grid = print_player_grid()
     ship_coordinates = get_ship_coordinates()
-    validate_ship_coordinates(ship_coordinates, grid)
+    validate_ship_coordinates(ship_coordinates, grid, col_labels, row_labels)
 
 
 
