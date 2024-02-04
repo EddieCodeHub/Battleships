@@ -35,7 +35,7 @@ def print_player_grid():
     for col in col_labels:
         print(col, end=" ")
     print() 
-    for i, row in enumerate(player_grid):
+    for i, row in enumerate(player_grid):  # enumerate adds numbers to the rows
         print(row_labels[i], end=" ")
         for cell in row:
             print(cell, end=" ")
@@ -155,6 +155,33 @@ def get_cpu_guess():
     return cpu_guess
 
 
+def validate_cpu_guess(cpu_guess, player_grid, col_labels, row_labels, cpu_ship_num):
+    """
+    Takes in cpu guess and validates them and prints the grid with hits and misses
+    """
+    row, col = cpu_guess
+    row_index = row - 1
+    col_index = ord(col) - 65
+    if player_grid[row_index][col_index] == ship_symbol:
+        print("CPU Hit!")
+        player_grid[row_index][col_index] = hit_symbol
+        cpu_ship_num -= 1
+    else:
+        print("CPU Miss!")
+        player_grid[row_index][col_index] = miss_symbol
+    print(" ", end=" ") 
+    for col in col_labels:
+        print(col, end=" ")
+    print() 
+    for i, row in enumerate(player_grid):
+        print(row_labels[i], end=" ")
+        for cell in row:
+            print(cell, end=" ")
+        print()
+    print(cpu_ship_num)
+    return player_grid
+
+
 def main_loop():
     """
     Handles the main game loop
@@ -166,7 +193,11 @@ def main_loop():
     cpu_grid, shot_grid = generate_cpu_ships(col_labels, row_labels)
     player_guess = get_player_guess()
     validate_player_guess(player_guess, cpu_grid, shot_grid, col_labels, row_labels, player_ship_num)
-    get_cpu_guess()
+    cpu_guess = get_cpu_guess()
+    validate_cpu_guess(cpu_guess, player_grid, col_labels, row_labels, cpu_ship_num)
+
+
+
 
 
 
