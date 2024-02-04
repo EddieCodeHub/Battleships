@@ -182,6 +182,8 @@ def validate_cpu_guess(cpu_guess, player_grid, col_labels, row_labels, cpu_ship_
     return player_grid
 
 
+
+
 def main_loop():
     """
     Handles the main game loop
@@ -195,12 +197,17 @@ def main_loop():
     validate_player_guess(player_guess, cpu_grid, shot_grid, col_labels, row_labels, player_ship_num)
     cpu_guess = get_cpu_guess()
     validate_cpu_guess(cpu_guess, player_grid, col_labels, row_labels, cpu_ship_num)
-
-
-
-
-
-
+    while player_ship_num > 0 and cpu_ship_num > 0:
+        player_guess = get_player_guess()
+        validate_player_guess(player_guess, cpu_grid, shot_grid, col_labels, row_labels, player_ship_num)
+        cpu_guess = get_cpu_guess()
+        validate_cpu_guess(cpu_guess, player_grid, col_labels, row_labels, cpu_ship_num)
+        print(f"player has {player_ship_num} ships left")
+        print(f"CPU has {cpu_ship_num} ships left")
+    if player_ship_num == 0:
+        print("Game Over! CPU wins!")
+    else:
+        print("Game Over! Player wins!")
 
 
 main_loop()
