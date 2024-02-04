@@ -21,7 +21,6 @@ def game_intro_message():
     print("The Board is a 5x5 grid, Starting at the top left at Co-ordinate: row: 1, column: A")
     print("Each player had 3 ships each")
     print("First to sink all enemy ships wins!")
-    print("To replay the game, select run program")
 
 
 
@@ -48,7 +47,7 @@ def get_ship_coordinates():
     Takes in player input to generate ship co-ordinates
     """
     player_ship_coordinates = []
-    for i in range(player_ship_num):
+    for i in range(3):
         print(f"Enter co-ordinates for ship {i + 1}")
         row = int(input("Enter row number: "))
         col = input("Enter column letter: ").upper()
@@ -87,7 +86,7 @@ def generate_cpu_ships(col_labels, row_labels):
     cpu_grid = [["-" for _ in range(5)] for _ in range(5)]
     # Create a new grid to store the shots
     shot_grid = [["-" for _ in range(5)] for _ in range(5)]
-    for i in range(player_ship_num):
+    for i in range(3):
         row = randint(1, 5)
         col = randint(0, 4)
         if cpu_grid[row - 1][col] == ship_symbol:
@@ -118,14 +117,18 @@ def get_player_guess():
     return player_guess
 
 
-def validate_player_guess(player_guess, cpu_grid, shot_grid, col_labels, row_labels, player_ship_num):
+def validate_player_guess(player_guess, cpu_grid, shot_grid, col_labels, row_labels):
     """
     Takes in player guess and validates them and prints the grid with hits and misses
     """
+    global player_ship_num
     row, col = player_guess
     row_index = row - 1
     col_index = ord(col) - 65
-    if cpu_grid[row_index][col_index] == ship_symbol:
+    if shot_grid[row_index][col_index] == miss_symbol:
+        print("You already guessed that!")
+        get_player_guess()
+    elif cpu_grid[row_index][col_index] == ship_symbol:
         print("Hit!")
         shot_grid[row_index][col_index] = hit_symbol
         player_ship_num -= 1
@@ -141,7 +144,6 @@ def validate_player_guess(player_guess, cpu_grid, shot_grid, col_labels, row_lab
         for cell in row:
             print(cell, end=" ")
         print()
-    print(player_ship_num)
     return shot_grid
     
 
@@ -155,14 +157,17 @@ def get_cpu_guess():
     return cpu_guess
 
 
-def validate_cpu_guess(cpu_guess, player_grid, col_labels, row_labels, cpu_ship_num):
+def validate_cpu_guess(cpu_guess, player_grid, col_labels, row_labels):
     """
     Takes in cpu guess and validates them and prints the grid with hits and misses
     """
+    global cpu_ship_num
     row, col = cpu_guess
     row_index = row - 1
-    col_index = ord(col) - 65
-    if player_grid[row_index][col_index] == ship_symbol:
+    col_index = col
+    if player_grid[row_index][col_index] == miss_symbol:
+        get_cpu_guess()
+    elif player_grid[row_index][col_index] == ship_symbol:
         print("CPU Hit!")
         player_grid[row_index][col_index] = hit_symbol
         cpu_ship_num -= 1
@@ -178,10 +183,7 @@ def validate_cpu_guess(cpu_guess, player_grid, col_labels, row_labels, cpu_ship_
         for cell in row:
             print(cell, end=" ")
         print()
-    print(cpu_ship_num)
     return player_grid
-
-
 
 
 def main_loop():
@@ -194,20 +196,21 @@ def main_loop():
     validate_ship_coordinates(player_ship_coordinates, player_grid, col_labels, row_labels)
     cpu_grid, shot_grid = generate_cpu_ships(col_labels, row_labels)
     player_guess = get_player_guess()
-    validate_player_guess(player_guess, cpu_grid, shot_grid, col_labels, row_labels, player_ship_num)
+    validate_player_guess(player_guess, cpu_grid, shot_grid, col_labels, row_labels)
     cpu_guess = get_cpu_guess()
-    validate_cpu_guess(cpu_guess, player_grid, col_labels, row_labels, cpu_ship_num)
+    validate_cpu_guess(cpu_guess, player_grid, col_labels, row_labels)
     while player_ship_num > 0 and cpu_ship_num > 0:
         player_guess = get_player_guess()
-        validate_player_guess(player_guess, cpu_grid, shot_grid, col_labels, row_labels, player_ship_num)
+        validate_player_guess(player_guess, cpu_grid, shot_grid, col_labels, row_labels)
         cpu_guess = get_cpu_guess()
-        validate_cpu_guess(cpu_guess, player_grid, col_labels, row_labels, cpu_ship_num)
-        print(f"player has {player_ship_num} ships left")
+        validate_cpu_guess(cpu_guess, player_grid, col_labels, row_labels)
+        print(f"Player has {player_ship_num} ships left")
         print(f"CPU has {cpu_ship_num} ships left")
     if player_ship_num == 0:
         print("Game Over! CPU wins!")
     else:
         print("Game Over! Player wins!")
+    print("To replay the game, select run program")
 
 
 main_loop()
