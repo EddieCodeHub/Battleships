@@ -9,7 +9,9 @@ hit_symbol = "X"
 miss_symbol = "O"
 row_labels = [1, 2, 3, 4, 5]
 col_labels = ["A", "B", "C", "D", "E"]
-cpu_guesses = set() # Create a set to store the guesses
+
+# Create a set to store the guesses
+cpu_guesses = set()
 
 
 def game_intro_message():
@@ -134,7 +136,6 @@ def get_player_guess():
             print("Invalid guess! Please try again")
         else:
             player_guess = (row, col)
-            print(player_guess)
             return player_guess
 
 def validate_player_guess(player_guess, cpu_grid, shot_grid, col_labels, row_labels):
@@ -164,7 +165,6 @@ def validate_player_guess(player_guess, cpu_grid, shot_grid, col_labels, row_lab
         for cell in row:
             print(cell, end=" ")
         print()
-    print(f"player guess = {player_guess}")
     return shot_grid
     
 
@@ -179,7 +179,6 @@ def get_cpu_guess():
         # If the guess is not in the set of previous guesses, add it to the set and return it
         if cpu_guess not in cpu_guesses:
             cpu_guesses.add(cpu_guess)
-            print(f"cpu guesses = {cpu_guesses}")
             return cpu_guess
 
 
@@ -200,6 +199,7 @@ def validate_cpu_guess(cpu_guess, player_grid, col_labels, row_labels):
     else:
         print("CPU Miss!")
         player_grid[row_index][col_index] = miss_symbol
+    print("  ", end="")
     for col in col_labels:
         print(col, end=" ")
     print() 
@@ -208,9 +208,7 @@ def validate_cpu_guess(cpu_guess, player_grid, col_labels, row_labels):
         for cell in row:
             print(cell, end=" ")
         print()
-    print(f"CPU guess = {cpu_guess}")
     return player_grid
-
 
 def main_loop():
     """
