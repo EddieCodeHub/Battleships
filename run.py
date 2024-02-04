@@ -121,7 +121,7 @@ def validate_player_guess(player_guess, cpu_grid, shot_grid, col_labels, row_lab
     """
     Takes in player guess and validates them and prints the grid with hits and misses
     """
-    global player_ship_num
+    global cpu_ship_num
     row, col = player_guess
     row_index = row - 1
     col_index = ord(col) - 65
@@ -131,7 +131,7 @@ def validate_player_guess(player_guess, cpu_grid, shot_grid, col_labels, row_lab
     elif cpu_grid[row_index][col_index] == ship_symbol:
         print("Hit!")
         shot_grid[row_index][col_index] = hit_symbol
-        player_ship_num -= 1
+        cpu_ship_num -= 1
     else:
         print("Miss!")
         shot_grid[row_index][col_index] = miss_symbol
@@ -161,7 +161,7 @@ def validate_cpu_guess(cpu_guess, player_grid, col_labels, row_labels):
     """
     Takes in cpu guess and validates them and prints the grid with hits and misses
     """
-    global cpu_ship_num
+    global player_ship_num
     row, col = cpu_guess
     row_index = row - 1
     col_index = col
@@ -170,7 +170,7 @@ def validate_cpu_guess(cpu_guess, player_grid, col_labels, row_labels):
     elif player_grid[row_index][col_index] == ship_symbol:
         print("CPU Hit!")
         player_grid[row_index][col_index] = hit_symbol
-        cpu_ship_num -= 1
+        player_ship_num -= 1
     else:
         print("CPU Miss!")
         player_grid[row_index][col_index] = miss_symbol
