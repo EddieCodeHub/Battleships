@@ -48,7 +48,7 @@ def get_ship_coordinates():
     Takes in player input to generate ship co-ordinates
     """
     player_ship_coordinates = []
-    for i in range(ship_num):
+    for i in range(player_ship_num):
         print(f"Enter co-ordinates for ship {i + 1}")
         row = int(input("Enter row number: "))
         col = input("Enter column letter: ").upper()
@@ -87,7 +87,7 @@ def generate_cpu_ships(col_labels, row_labels):
     cpu_grid = [["-" for _ in range(5)] for _ in range(5)]
     # Create a new grid to store the shots
     shot_grid = [["-" for _ in range(5)] for _ in range(5)]
-    for i in range(ship_num):
+    for i in range(player_ship_num):
         row = randint(1, 5)
         col = randint(0, 4)
         if cpu_grid[row - 1][col] == ship_symbol:
@@ -118,7 +118,7 @@ def get_player_guess():
     return player_guess
 
 
-def validate_player_guess(player_guess, cpu_grid, shot_grid, col_labels, row_labels):
+def validate_player_guess(player_guess, cpu_grid, shot_grid, col_labels, row_labels, player_ship_num):
     """
     Takes in player guess and validates them and prints the grid with hits and misses
     """
@@ -128,6 +128,7 @@ def validate_player_guess(player_guess, cpu_grid, shot_grid, col_labels, row_lab
     if cpu_grid[row_index][col_index] == ship_symbol:
         print("Hit!")
         shot_grid[row_index][col_index] = hit_symbol
+        player_ship_num -= 1
     else:
         print("Miss!")
         shot_grid[row_index][col_index] = miss_symbol
@@ -140,7 +141,19 @@ def validate_player_guess(player_guess, cpu_grid, shot_grid, col_labels, row_lab
         for cell in row:
             print(cell, end=" ")
         print()
+    print(player_ship_num)
     return shot_grid
+    
+
+def get_cpu_guess():
+    """
+    Generates CPU guesses
+    """
+    row = randint(1, 5)
+    col = randint(0, 4)
+    cpu_guess = (row, col)
+    return cpu_guess
+
 
 def main_loop():
     """
@@ -152,7 +165,8 @@ def main_loop():
     validate_ship_coordinates(player_ship_coordinates, player_grid, col_labels, row_labels)
     cpu_grid, shot_grid = generate_cpu_ships(col_labels, row_labels)
     player_guess = get_player_guess()
-    validate_player_guess(player_guess, cpu_grid, shot_grid, col_labels, row_labels)
+    validate_player_guess(player_guess, cpu_grid, shot_grid, col_labels, row_labels, player_ship_num)
+    get_cpu_guess()
 
 
 
