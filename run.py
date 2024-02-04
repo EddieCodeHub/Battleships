@@ -48,10 +48,15 @@ def get_ship_coordinates():
     """
     player_ship_coordinates = []
     for i in range(3):
-        print(f"Enter co-ordinates for ship {i + 1}")
-        row = int(input("Enter row number: "))
-        col = input("Enter column letter: ").upper()
-        player_ship_coordinates.append((row, col))
+        while True:
+            print(f"Enter co-ordinates for ship {i + 1}")
+            row = int(input("Enter row number: "))
+            col = input("Enter column letter: ").upper()
+            if row in range(1, 5) and col in ["A", "B", "C", "D", "E"]:
+                player_ship_coordinates.append((row, col))
+                break
+            else:
+                print("Invalid placement! Please try again")
     return player_ship_coordinates
 
 def validate_ship_coordinates(player_ship_coordinates, player_grid, col_labels, row_labels):
@@ -61,10 +66,7 @@ def validate_ship_coordinates(player_ship_coordinates, player_grid, col_labels, 
     for row, col in player_ship_coordinates:
         row_index = row - 1
         col_index = ord(col) - 65
-        if row_index not in range(0, 4) or col not in ["A", "B", "C", "D", "E"]:
-            print("Invalid placement! Please try again")
-            get_ship_coordinates()
-        elif player_grid[row_index][col_index] == ship_symbol:
+        if player_grid[row_index][col_index] == ship_symbol:
             print("You already have a ship there!")
             get_ship_coordinates()
         player_grid[row_index][col_index] = ship_symbol
@@ -90,11 +92,12 @@ def generate_cpu_ships(col_labels, row_labels):
     # Create a new grid to store the shots
     shot_grid = [["-" for _ in range(5)] for _ in range(5)]
     for i in range(3):
-        row = randint(1, 5)
+        row = randint(0, 4)
         col = randint(0, 4)
-        if cpu_grid[row - 1][col] == ship_symbol:
+        print(row, col)
+        if cpu_grid[row][col] == ship_symbol:
             continue
-        cpu_grid[row - 1][col] = ship_symbol
+        cpu_grid[row][col] = ship_symbol
     
     # Print the shot grid instead of the cpu grid
     print(" ", end=" ") 
@@ -118,12 +121,11 @@ def get_player_guess():
     col = input("Enter column letter: ").upper()
     if row not in range(1, 5) or col not in ["A", "B", "C", "D", "E"]:
         print("Invalid guess! Please try again")
-        get_player_guess()
+        return get_player_guess()
     else:
         player_guess = (row, col)
         print(player_guess)
         return player_guess
-    
 
 def validate_player_guess(player_guess, cpu_grid, shot_grid, col_labels, row_labels):
     """
@@ -160,8 +162,8 @@ def get_cpu_guess():
     """
     Generates CPU guesses
     """
-    row = randint(0, 4)
-    col = randint(0, 4)
+    row = randint(1, 5)
+    col = randint(1, 5)
     cpu_guess = (row, col)
     return cpu_guess
 
@@ -173,7 +175,7 @@ def validate_cpu_guess(cpu_guess, player_grid, col_labels, row_labels):
     global player_ship_num
     row, col = cpu_guess
     row_index = row - 1 
-    col_index = col - 1 
+    col_index = col - 1
     if player_grid[row_index][col_index] == miss_symbol:
         get_cpu_guess()
     if player_grid[row_index][col_index] == ship_symbol:
