@@ -61,7 +61,10 @@ def validate_ship_coordinates(player_ship_coordinates, player_grid, col_labels, 
     for row, col in player_ship_coordinates:
         row_index = row - 1
         col_index = ord(col) - 65
-        if player_grid[row_index][col_index] == ship_symbol:
+        if row_index not in range(0, 4) or col not in ["A", "B", "C", "D", "E"]:
+            print("Invalid placement! Please try again")
+            get_ship_coordinates()
+        elif player_grid[row_index][col_index] == ship_symbol:
             print("You already have a ship there!")
             get_ship_coordinates()
         player_grid[row_index][col_index] = ship_symbol
@@ -113,9 +116,14 @@ def get_player_guess():
     print("Enter your guess!")
     row = int(input("Enter row number: "))
     col = input("Enter column letter: ").upper()
-    player_guess = (row, col)
-    return player_guess
-
+    if row not in range(1, 5) or col not in ["A", "B", "C", "D", "E"]:
+        print("Invalid guess! Please try again")
+        get_player_guess()
+    else:
+        player_guess = (row, col)
+        print(player_guess)
+        return player_guess
+    
 
 def validate_player_guess(player_guess, cpu_grid, shot_grid, col_labels, row_labels):
     """
@@ -128,7 +136,7 @@ def validate_player_guess(player_guess, cpu_grid, shot_grid, col_labels, row_lab
     if shot_grid[row_index][col_index] == miss_symbol:
         print("You already guessed that!")
         get_player_guess()
-    elif cpu_grid[row_index][col_index] == ship_symbol:
+    if cpu_grid[row_index][col_index] == ship_symbol:
         print("Hit!")
         shot_grid[row_index][col_index] = hit_symbol
         cpu_ship_num -= 1
@@ -144,6 +152,7 @@ def validate_player_guess(player_guess, cpu_grid, shot_grid, col_labels, row_lab
         for cell in row:
             print(cell, end=" ")
         print()
+    print(f"player guess = {player_guess}")
     return shot_grid
     
 
@@ -151,7 +160,7 @@ def get_cpu_guess():
     """
     Generates CPU guesses
     """
-    row = randint(1, 5)
+    row = randint(0, 4)
     col = randint(0, 4)
     cpu_guess = (row, col)
     return cpu_guess
@@ -163,11 +172,11 @@ def validate_cpu_guess(cpu_guess, player_grid, col_labels, row_labels):
     """
     global player_ship_num
     row, col = cpu_guess
-    row_index = row - 1
-    col_index = col
+    row_index = row - 1 
+    col_index = col - 1 
     if player_grid[row_index][col_index] == miss_symbol:
         get_cpu_guess()
-    elif player_grid[row_index][col_index] == ship_symbol:
+    if player_grid[row_index][col_index] == ship_symbol:
         print("CPU Hit!")
         player_grid[row_index][col_index] = hit_symbol
         player_ship_num -= 1
@@ -183,6 +192,7 @@ def validate_cpu_guess(cpu_guess, player_grid, col_labels, row_labels):
         for cell in row:
             print(cell, end=" ")
         print()
+    print(f"CPU guess = {cpu_guess}")
     return player_grid
 
 
