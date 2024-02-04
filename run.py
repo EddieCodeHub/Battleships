@@ -9,6 +9,7 @@ hit_symbol = "X"
 miss_symbol = "O"
 row_labels = [1, 2, 3, 4, 5]
 col_labels = ["A", "B", "C", "D", "E"]
+cpu_guesses = set() # Create a set to store the guesses
 
 
 def game_intro_message():
@@ -92,12 +93,13 @@ def generate_cpu_ships(col_labels, row_labels):
     # Create a new grid to store the shots
     shot_grid = [["-" for _ in range(5)] for _ in range(5)]
     for i in range(3):
-        row = randint(0, 4)
-        col = randint(0, 4)
-        print(row, col)
-        if cpu_grid[row][col] == ship_symbol:
-            continue
-        cpu_grid[row][col] = ship_symbol
+        while True:
+            row = randint(0, 4)
+            col = randint(0, 4) 
+            # makes sure the cpu doesn't place ships on top of each other         
+            if cpu_grid[row][col] != ship_symbol:
+                cpu_grid[row][col] = ship_symbol
+                break
     
     # Print the shot grid instead of the cpu grid
     print(" ", end=" ") 
@@ -162,10 +164,15 @@ def get_cpu_guess():
     """
     Generates CPU guesses
     """
-    row = randint(1, 5)
-    col = randint(1, 5)
-    cpu_guess = (row, col)
-    return cpu_guess
+    while True:
+        row = randint(1, 5)
+        col = randint(1, 5)
+        cpu_guess = (row, col)
+        # If the guess is not in the set of previous guesses, add it to the set and return it
+        if cpu_guess not in cpu_guesses:
+            cpu_guesses.add(cpu_guess)
+            print(f"cpu guesses = {cpu_guesses}")
+            return cpu_guess
 
 
 def validate_cpu_guess(cpu_guess, player_grid, col_labels, row_labels):
@@ -185,7 +192,6 @@ def validate_cpu_guess(cpu_guess, player_grid, col_labels, row_labels):
     else:
         print("CPU Miss!")
         player_grid[row_index][col_index] = miss_symbol
-    print(" ", end=" ") 
     for col in col_labels:
         print(col, end=" ")
     print() 
