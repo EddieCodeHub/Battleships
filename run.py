@@ -51,7 +51,11 @@ def get_ship_coordinates():
     for i in range(3):
         while True:
             print(f"Enter co-ordinates for ship {i + 1}")
-            row = int(input("Enter row number: "))
+            try:
+                row = int(input("Enter row number: "))
+            except ValueError:
+                print("Invalid input! Please enter a number for the row.")
+                continue
             col = input("Enter column letter: ").upper()
             if row in range(1, 5) and col in ["A", "B", "C", "D", "E"]:
                 player_ship_coordinates.append((row, col))
@@ -59,6 +63,7 @@ def get_ship_coordinates():
             else:
                 print("Invalid placement! Please try again")
     return player_ship_coordinates
+
 
 def validate_ship_coordinates(player_ship_coordinates, player_grid, col_labels, row_labels):
     """
@@ -95,14 +100,13 @@ def generate_cpu_ships(col_labels, row_labels):
     for i in range(3):
         while True:
             row = randint(0, 4)
-            col = randint(0, 4) 
-            # makes sure the cpu doesn't place ships on top of each other         
+            col = randint(0, 4)
             if cpu_grid[row][col] != ship_symbol:
                 cpu_grid[row][col] = ship_symbol
                 break
     
     # Print the shot grid instead of the cpu grid
-    print(" ", end=" ") 
+    print("  ", end="")
     for col in col_labels:
         print(col, end=" ")
     print() 
@@ -118,16 +122,20 @@ def get_player_guess():
     """
     Takes in player input to generate guesses and print appropriate symbols on the grid
     """
-    print("Enter your guess!")
-    row = int(input("Enter row number: "))
-    col = input("Enter column letter: ").upper()
-    if row not in range(1, 5) or col not in ["A", "B", "C", "D", "E"]:
-        print("Invalid guess! Please try again")
-        return get_player_guess()
-    else:
-        player_guess = (row, col)
-        print(player_guess)
-        return player_guess
+    while True:
+        print("Enter your guess!")
+        try:
+            row = int(input("Enter row number: "))
+        except ValueError:
+            print("Invalid input! Please enter a number for the row.")
+            continue
+        col = input("Enter column letter: ").upper()
+        if row not in range(1, 5) or col not in ["A", "B", "C", "D", "E"]:
+            print("Invalid guess! Please try again")
+        else:
+            player_guess = (row, col)
+            print(player_guess)
+            return player_guess
 
 def validate_player_guess(player_guess, cpu_grid, shot_grid, col_labels, row_labels):
     """
