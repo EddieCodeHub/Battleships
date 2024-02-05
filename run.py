@@ -54,11 +54,11 @@ def get_ship_coordinates():
         while True:
             print(f"Enter co-ordinates for ship {i + 1}")
             try:
-                row = int(input("Enter row number: "))
+                row = int(input("Enter row number: \n"))
             except ValueError:
                 print("Invalid input! Please enter a number for the row.")
                 continue
-            col = input("Enter column letter: ").upper()
+            col = input("Enter column letter: \n").upper()
             if row in range(1, 5) and col in ["A", "B", "C", "D", "E"]:
                 player_ship_coordinates.append((row, col))
                 break
@@ -127,11 +127,11 @@ def get_player_guess():
     while True:
         print("Enter your guess!")
         try:
-            row = int(input("Enter row number: "))
+            row = int(input("Enter row number: \n"))
         except ValueError:
             print("Invalid input! Please enter a number for the row.")
             continue
-        col = input("Enter column letter: ").upper()
+        col = input("Enter column letter: \n").upper()
         if row not in range(1, 5) or col not in ["A", "B", "C", "D", "E"]:
             print("Invalid guess! Please try again")
         else:
