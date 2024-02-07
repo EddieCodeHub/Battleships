@@ -99,7 +99,7 @@ def get_ship_coordinates():
                 print("\nInvalid input! Please enter a number for the row.")
                 continue
             col = input("\nEnter column letter: \n").upper()
-            if row in range(1, 5) and col in ["A", "B", "C", "D", "E"]:
+            if row in range(1, 6) and col in ["A", "B", "C", "D", "E"]:
                 player_ship_coordinates.append((row, col))
                 break
             else:
@@ -185,7 +185,7 @@ def get_player_guess():
             print("Invalid input! Please enter a number for the row.")
             continue
         col = input("Enter column letter: \n").upper()
-        if row not in range(1, 5) or col not in ["A", "B", "C", "D", "E"]:
+        if row not in range(1, 6) or col not in ["A", "B", "C", "D", "E"]:
             print("Invalid guess! Please try again")
         else:
             player_guess = (row, col)
@@ -208,18 +208,18 @@ def validate_player_guess(
     row_index = row - 1
     col_index = ord(col) - 65
     if shot_grid[row_index][col_index] == miss_symbol:
-        print("You already guessed that!")
+        print("\nYou already guessed that!")
         get_player_guess()
     if cpu_grid[row_index][col_index] == ship_symbol:
-        print("Hit!")
+        print("\nHit!")
         shot_grid[row_index][col_index] = hit_symbol
         cpu_ship_num -= 1
     else:
-        print("Miss!")
+        print("\nMiss!")
         shot_grid[row_index][col_index] = miss_symbol
-    print(".-. .   .-. . . .-. .-.")
-    print("|-' |   |-|  |  |-  |( ")
-    print("'   `-' ` '  `  `-' ' '")
+    print(".-. .-. . .")
+    print("|   |-' | |")
+    print("`-' '   `-'")
     print(" ", end=" ")
     for col in col_labels:
         print(col, end=" ")
@@ -264,15 +264,15 @@ def validate_cpu_guess(
     if player_grid[row_index][col_index] == miss_symbol:
         get_cpu_guess()
     if player_grid[row_index][col_index] == ship_symbol:
-        print("CPU Hit!")
+        print("\nCPU Hit!")
         player_grid[row_index][col_index] = hit_symbol
         player_ship_num -= 1
     else:
-        print("CPU Miss!")
+        print("\nCPU Miss!")
         player_grid[row_index][col_index] = miss_symbol
-    print(".-. .-. . .")
-    print("|   |-' | |")
-    print("`-' '   `-'")
+    print(".-. .   .-. . . .-. .-.")
+    print("|-' |   |-|  |  |-  |( ")
+    print("'   `-' ` '  `  `-' ' '")
     print("  ", end="")
     for col in col_labels:
         print(col, end=" ")
@@ -287,9 +287,9 @@ def validate_cpu_guess(
 
 def reset_game():
     """
-    ten second timer to reset the game
+    five second timer to reset the game
     """
-    time.sleep(10)
+    time.sleep(5)
     main_menu()
 
 
@@ -331,10 +331,19 @@ def main_loop():
         print(f"Player has {player_ship_num} ships left")
         print(f"CPU has {cpu_ship_num} ships left")
     if player_ship_num == 0:
-        print("Game Over! CPU wins!")
+        print(".-. .-. .  . .-.   .-. . . .-. .-.") # cpu wins
+        print("|.. |-| |\/| |-    | | | | |-  |(")
+        print("`-' ` ' '  ` `-'   `-' `.' `-' ' '")
+        print(".-. .-. . .   . . .  -  . . .-.")
+        print("|   |-' | |   | | |  |  |\| `-.")
+        print("`-' '   `-'   `.'.'  -  ' ` `-'")
     else:
-        print("Game Over! Player wins!")
-    print("To replay the game, select run program")
+        print(".-. .-. .  . .-.   .-. . . .-. .-.")
+        print("|.. |-| |\/| |-    | | | | |-  |(")
+        print("`-' ` ' '  ` `-'   `-' `.' `-' ' '")
+        print(".-. .   .-. . . .-. .-.   . . .  -  . . .-.")
+        print("|-' |   |-|  |  |-  |(    | | |  |  |\| `-.")
+        print("'   `-' ` '  `  `-' ' '   `.'.'  -  ' ` `-'")
     reset_game()
 
 
