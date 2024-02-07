@@ -1,5 +1,7 @@
 # Import random to create CPU player moves
 from random import randint
+#import time to create a timer to reset the game
+import time
 
 # Create Variables to generate game
 player_ship_num = 3
@@ -14,17 +16,53 @@ col_labels = ["A", "B", "C", "D", "E"]
 cpu_guesses = set()
 
 
-def game_intro_message():
+# idea taken from ascii.co.uk, credited in the README
+def print_title():
+    """
+    Prints the title of the game
+    """
+    print("                __                             __         ")
+    print(".--.--.--.-----|  .----.-----.--------.-----. |  |_.-----.")
+    print("|  |  |  |  -__|  |  __|  _  |        |  -__| |   _|  _  |")
+    print("|________|_____|__|____|_____|__|__|__|_____| |____|_____|")
+    print(" __          __   __   __             __    __             ")  
+    print("|  |--.---.-|  |_|  |_|  .-----.-----|  |--|__.-----.-----.")
+    print("|  _  |  _  |   _|   _|  |  -__|__ --|     |  |  _  |__ --|")
+    print("|_____|___._|____|____|__|_____|_____|__|__|__|   __|_____|")
+    print("                                              |__|      ")
+
+
+
+def main_menu():
+    """
+    Prints the main menu
+    """
+    print("\n1. Game Rules")
+    print("2. Play Game")
+    option = int(input("\nEnter an option: "))
+    if option == 1:
+        game_rules()
+        main_menu()
+    if option == 2:
+        main_loop()
+    else:
+        print("Invalid option! Please try again")
+        main_menu()
+
+
+def game_rules():
     """
     Prints Welcome message and instructions to play the game
     """
-    print("Welcome to battleships!")
-    print("Column co-ordinates go from left to right")
-    print("Row co-ordinates go from top to bottom")
-    print("The Board is a 5x5 grid")
-    print("Starting at the top left at Co-ordinate: row: 1, column: A")
-    print("Each player has 3 ships each")
-    print("First to sink all enemy ships wins!")
+    print(".-. . . .   .-. .-.")
+    print("|(  | | |   |-  `-.")
+    print("' ' `-' `-' `-' `-'")
+    print("\nColumn co-ordinates go from left to right")
+    print("\nRow co-ordinates go from top to bottom")
+    print("\nThe Board is a 5x5 grid")
+    print("\nStarting at the top left at Co-ordinate: row: 1, column: A")
+    print("\nEach player has 3 ships each")
+    print("\nFirst to sink all enemy ships wins!")
 
 
 def print_player_grid():
@@ -32,17 +70,19 @@ def print_player_grid():
     Generates Players empty grid for placing ships
     """
     player_grid = [["-" for _ in range(5)] for _ in range(5)]
-
+    print(".-. .   .-. . . .-. .-.")
+    print("|-' |   |-|  |  |-  |( ")
+    print("'   `-' ` '  `  `-' ' '")
     print(" ", end=" ")
     for col in col_labels:
         print(col, end=" ")
     print()
-    for i, row in enumerate(player_grid):  # enumerate adds numbers to the rows
+    for i, row in enumerate(player_grid): # enumerate adds numbers to the rows
         print(row_labels[i], end=" ")
         for cell in row:
             print(cell, end=" ")
         print()
-    print("Player 1, place your ships!")
+    print("\nPlayer 1, place your ships!")
     return player_grid
 
 
@@ -53,18 +93,18 @@ def get_ship_coordinates():
     player_ship_coordinates = []
     for i in range(3):
         while True:
-            print(f"Enter co-ordinates for ship {i + 1}")
+            print(f"\nEnter co-ordinates for ship {i + 1}")
             try:
-                row = int(input("Enter row number: \n"))
+                row = int(input("\nEnter row number: \n"))
             except ValueError:
-                print("Invalid input! Please enter a number for the row.")
+                print("\nInvalid input! Please enter a number for the row.")
                 continue
-            col = input("Enter column letter: \n").upper()
+            col = input("\nEnter column letter: \n").upper()
             if row in range(1, 5) and col in ["A", "B", "C", "D", "E"]:
                 player_ship_coordinates.append((row, col))
                 break
             else:
-                print("Invalid placement! Please try again")
+                print("\nInvalid placement! Please try again")
     return player_ship_coordinates
 
 
@@ -86,6 +126,9 @@ def validate_ship_coordinates(
             get_ship_coordinates()
         player_grid[row_index][col_index] = ship_symbol
     print("Ships placed!")
+    print(".-. .   .-. . . .-. .-.")
+    print("|-' |   |-|  |  |-  |( ")
+    print("'   `-' ` '  `  `-' ' '")
     print(" ", end=" ")
     for col in col_labels:
         print(col, end=" ")
@@ -115,6 +158,9 @@ def generate_cpu_ships(col_labels, row_labels):
                 break
 
     # Print the shot grid instead of the cpu grid
+    print(".-. .-. . .")
+    print("|   |-' | |")
+    print("`-' '   `-'")
     print("  ", end="")
     for col in col_labels:
         print(col, end=" ")
@@ -133,9 +179,9 @@ def get_player_guess():
     and print appropriate symbols on the grid
     """
     while True:
-        print("Enter your guess!")
+        print("\nEnter your guess!")
         try:
-            row = int(input("Enter row number: \n"))
+            row = int(input("\nEnter row number: \n"))
         except ValueError:
             print("Invalid input! Please enter a number for the row.")
             continue
@@ -172,6 +218,9 @@ def validate_player_guess(
     else:
         print("Miss!")
         shot_grid[row_index][col_index] = miss_symbol
+    print(".-. .   .-. . . .-. .-.")
+    print("|-' |   |-|  |  |-  |( ")
+    print("'   `-' ` '  `  `-' ' '")
     print(" ", end=" ")
     for col in col_labels:
         print(col, end=" ")
@@ -222,6 +271,9 @@ def validate_cpu_guess(
     else:
         print("CPU Miss!")
         player_grid[row_index][col_index] = miss_symbol
+    print(".-. .-. . .")
+    print("|   |-' | |")
+    print("`-' '   `-'")
     print("  ", end="")
     for col in col_labels:
         print(col, end=" ")
@@ -234,11 +286,19 @@ def validate_cpu_guess(
     return player_grid
 
 
+def reset_game():
+    """
+    ten second timer to reset the game
+    """
+    time.sleep(10)
+    main_menu()
+
+
+
 def main_loop():
     """
     Handles the main game loop
     """
-    game_intro_message()
     player_grid = print_player_grid()
     player_ship_coordinates = get_ship_coordinates()
     validate_ship_coordinates(
@@ -276,6 +336,9 @@ def main_loop():
     else:
         print("Game Over! Player wins!")
     print("To replay the game, select run program")
+    reset_game()
 
 
+print_title()
+main_menu()
 main_loop()
