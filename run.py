@@ -289,9 +289,14 @@ def reset_game():
     """
     five second timer to reset the game
     """
+    global player_ship_num
+    global cpu_ship_num
+    player_ship_num = 3
+    cpu_ship_num = 3
+    print("\nResetting game in 5 seconds...")
     time.sleep(5)
+    print_title()
     main_menu()
-
 
 
 def main_loop():
