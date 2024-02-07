@@ -32,13 +32,12 @@ def print_title():
     print("                                              |__|      ")
 
 
-
 def main_menu():
     """
     Prints the main menu
     """
     print("\n1. Game Rules")
-    print("2. Play Game")
+    print("\n2. Play Game")
     option = int(input("\nEnter an option: "))
     if option == 1:
         game_rules()
