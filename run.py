@@ -1,10 +1,10 @@
 # Import random to create CPU player moves
 from random import randint
-#import time to create a timer to reset the game
+# import time to create a timer to reset the game
 import time
 
 # Create Variables to generate game
-player_ship_num = 3
+p_ship_num = 3
 cpu_ship_num = 3
 ship_symbol = "S"
 hit_symbol = "X"
@@ -25,7 +25,7 @@ def print_title():
     print(".--.--.--.-----|  .----.-----.--------.-----. |  |_.-----.")
     print("|  |  |  |  -__|  |  __|  _  |        |  -__| |   _|  _  |")
     print("|________|_____|__|____|_____|__|__|__|_____| |____|_____|")
-    print(" __          __   __   __             __    __             ")  
+    print(" __          __   __   __             __    __")
     print("|  |--.---.-|  |_|  |_|  .-----.-----|  |--|__.-----.-----.")
     print("|  _  |  _  |   _|   _|  |  -__|__ --|     |  |  _  |__ --|")
     print("|_____|___._|____|____|__|_____|_____|__|__|__|   __|_____|")
@@ -76,7 +76,7 @@ def print_player_grid():
     for col in col_labels:
         print(col, end=" ")
     print()
-    for i, row in enumerate(player_grid): # enumerate adds numbers to the rows
+    for i, row in enumerate(player_grid):  # enumerate adds numbers to the rows
         print(row_labels[i], end=" ")
         for cell in row:
             print(cell, end=" ")
@@ -96,7 +96,8 @@ def get_ship_coordinates():
             try:
                 row = int(input("\nEnter row number: \n"))
             except ValueError:
-                print("\nInvalid input! Please enter a number for the row.")
+                print("\nInvalid input!")
+                print("\nPlease enter a number between 1 and 5 for the row.")
                 continue
             col = input("\nEnter column letter: \n").upper()
             if row in range(1, 6) and col in ["A", "B", "C", "D", "E"]:
@@ -124,7 +125,7 @@ def validate_ship_coordinates(
             print("You already have a ship there!")
             get_ship_coordinates()
         player_grid[row_index][col_index] = ship_symbol
-    print("Ships placed!")
+    print("\nShips placed!\n")
     print(".-. .   .-. . . .-. .-.")
     print("|-' |   |-|  |  |-  |( ")
     print("'   `-' ` '  `  `-' ' '")
@@ -182,7 +183,8 @@ def get_player_guess():
         try:
             row = int(input("\nEnter row number: \n"))
         except ValueError:
-            print("Invalid input! Please enter a number for the row.")
+            print("\nInvalid input!")
+            print("\nPlease enter a number between 1 and 5 for the row.")
             continue
         col = input("Enter column letter: \n").upper()
         if row not in range(1, 6) or col not in ["A", "B", "C", "D", "E"]:
@@ -257,7 +259,7 @@ def validate_cpu_guess(
     Takes in cpu guess and validates them
     and prints the grid with hits and misses
     """
-    global player_ship_num
+    global p_ship_num
     row, col = cpu_guess
     row_index = row - 1
     col_index = col - 1
@@ -289,14 +291,18 @@ def reset_game():
     """
     five second timer to reset the game
     """
-    global player_ship_num
+    global p_ship_num
     global cpu_ship_num
-    player_ship_num = 3
+    p_ship_num = 3
     cpu_ship_num = 3
     print("\nResetting game in 5 seconds...")
     time.sleep(5)
     print_title()
     main_menu()
+
+
+def ship_message(owner, num):
+    return f"{owner} has {num} {'ship' if num == 1 else 'ships'} left"
 
 
 def main_loop():
@@ -322,7 +328,7 @@ def main_loop():
     )
     cpu_guess = get_cpu_guess()
     validate_cpu_guess(cpu_guess, player_grid, col_labels, row_labels)
-    while player_ship_num > 0 and cpu_ship_num > 0:
+    while p_ship_num > 0 and cpu_ship_num > 0:
         player_guess = get_player_guess()
         validate_player_guess(
             player_guess,
@@ -333,21 +339,36 @@ def main_loop():
         )
         cpu_guess = get_cpu_guess()
         validate_cpu_guess(cpu_guess, player_grid, col_labels, row_labels)
-        print(f"Player has {player_ship_num} ships left")
-        print(f"CPU has {cpu_ship_num} ships left")
-    if player_ship_num == 0:
-        print(".-. .-. .  . .-.   .-. . . .-. .-.") # cpu wins
-        print("|.. |-| |\/| |-    | | | | |-  |(")
+        print(ship_message("Player", p_ship_num))
+        print(ship_message("CPU", cpu_ship_num))
+    if p_ship_num == 0:
+        print(".-. .-. .  . .-.   .-. . . .-. .-.")  # cpu wins
+        print(
+            "|.. |-| |{}{}| |-    | | | | |-  |("
+            .format("\\", "/")
+        )
         print("`-' ` ' '  ` `-'   `-' `.' `-' ' '")
+
         print(".-. .-. . .   . . .  -  . . .-.")
-        print("|   |-' | |   | | |  |  |\| `-.")
+        print(
+            "|   |-' | |   | | |  |  |{}| `-."
+            .format("\\")
+        )
         print("`-' '   `-'   `.'.'  -  ' ` `-'")
     else:
-        print(".-. .-. .  . .-.   .-. . . .-. .-.")
-        print("|.. |-| |\/| |-    | | | | |-  |(")
+        print(".-. .-. .  . .-.   .-. . . .-. .-.")  # player wins
+        print(
+            "|.. |-| |{}{}| |-    | | | | |-  |("
+            .format("\\", "/")
+        )
         print("`-' ` ' '  ` `-'   `-' `.' `-' ' '")
+
         print(".-. .   .-. . . .-. .-.   . . .  -  . . .-.")
-        print("|-' |   |-|  |  |-  |(    | | |  |  |\| `-.")
+        print(
+            "|-' |   |-|  |  |-  |(    | | |  |  |{}| `-."
+            .format("\\")
+        )
+
         print("'   `-' ` '  `  `-' ' '   `.'.'  -  ' ` `-'")
     reset_game()
 
