@@ -16,7 +16,7 @@ col_labels = ["A", "B", "C", "D", "E"]
 cpu_guesses = set()
 
 
-# idea taken from ascii.co.uk, credited in the README
+# All ASCII art taken from ascii.co.uk, credited in the README
 def print_title():
     """
     Prints the title of the game
@@ -42,6 +42,7 @@ def main_menu():
     if option == 1:
         game_rules()
         main_menu()
+    # no elif statement as the game will start straight after rules are printed
     if option == 2:
         main_loop()
     else:
@@ -76,7 +77,8 @@ def print_player_grid():
     for col in col_labels:
         print(col, end=" ")
     print()
-    for i, row in enumerate(player_grid):  # enumerate adds numbers to the rows
+    # enumerate adds numbers to the rows
+    for i, row in enumerate(player_grid):
         print(row_labels[i], end=" ")
         for cell in row:
             print(cell, end=" ")
@@ -89,8 +91,10 @@ def get_ship_coordinates():
     """
     Takes in player input to generate ship co-ordinates
     """
+    # Create a list to store the ship co-ordinates
     player_ship_coordinates = []
     for i in range(3):
+        # while statement to handle invalid inputs
         while True:
             print(f"\nEnter co-ordinates for ship {i + 1}")
             try:
@@ -121,6 +125,7 @@ def validate_ship_coordinates(
     for row, col in player_ship_coordinates:
         row_index = row - 1
         col_index = ord(col) - 65
+        # checks to see if there is already a ship in the cell
         if player_grid[row_index][col_index] == ship_symbol:
             print("You already have a ship there!")
             get_ship_coordinates()
@@ -296,6 +301,7 @@ def reset_game():
     p_ship_num = 3
     cpu_ship_num = 3
     print("\nResetting game in 5 seconds...")
+    # 5 second timer
     time.sleep(5)
     print_title()
     main_menu()
@@ -342,28 +348,28 @@ def main_loop():
         print(ship_message("Player", p_ship_num))
         print(ship_message("CPU", cpu_ship_num))
     if p_ship_num == 0:
-        print(".-. .-. .  . .-.   .-. . . .-. .-.")  # cpu wins
+        print(".-. .-. .  . .-.   .-. . . .-. .-.")
         print(
             "|.. |-| |{}{}| |-    | | | | |-  |("
             .format("\\", "/")
         )
         print("`-' ` ' '  ` `-'   `-' `.' `-' ' '")
 
-        print(".-. .-. . .   . . .  -  . . .-.")
+        print(".-. .-. . .   . . .  -  . . .-.")  # cpu wins
         print(
             "|   |-' | |   | | |  |  |{}| `-."
             .format("\\")
         )
         print("`-' '   `-'   `.'.'  -  ' ` `-'")
     else:
-        print(".-. .-. .  . .-.   .-. . . .-. .-.")  # player wins
+        print(".-. .-. .  . .-.   .-. . . .-. .-.")
         print(
             "|.. |-| |{}{}| |-    | | | | |-  |("
             .format("\\", "/")
         )
         print("`-' ` ' '  ` `-'   `-' `.' `-' ' '")
 
-        print(".-. .   .-. . . .-. .-.   . . .  -  . . .-.")
+        print(".-. .   .-. . . .-. .-.   . . .  -  . . .-.")  # player wins
         print(
             "|-' |   |-|  |  |-  |(    | | |  |  |{}| `-."
             .format("\\")
