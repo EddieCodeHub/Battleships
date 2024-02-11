@@ -78,6 +78,7 @@ def print_player_grid():
         print(col, end=" ")
     print()
     # enumerate adds numbers to the rows
+    # grid making function used from co-pilot suggestion credited in README
     for i, row in enumerate(player_grid):
         print(row_labels[i], end=" ")
         for cell in row:
@@ -129,8 +130,10 @@ def validate_ship_coordinates(
         if player_grid[row_index][col_index] == ship_symbol:
             print("You already have a ship there!")
             get_ship_coordinates()
+            # places ships on the grid
         player_grid[row_index][col_index] = ship_symbol
     print("\nShips placed!\n")
+    # label for grid
     print(".-. .   .-. . . .-. .-.")
     print("|-' |   |-|  |  |-  |( ")
     print("'   `-' ` '  `  `-' ' '")
@@ -155,9 +158,11 @@ def generate_cpu_ships(col_labels, row_labels):
     # Create a new grid to store the shots
     shot_grid = [["-" for _ in range(5)] for _ in range(5)]
     for i in range(3):
+        # randomly places ships on the grid
         while True:
             row = randint(0, 4)
             col = randint(0, 4)
+            # checks to see if there is already a ship in the cell
             if cpu_grid[row][col] != ship_symbol:
                 cpu_grid[row][col] = ship_symbol
                 break
@@ -183,6 +188,7 @@ def get_player_guess():
     Takes in player input to generate guesses
     and print appropriate symbols on the grid
     """
+    # while statement to handle invalid inputs
     while True:
         print("\nEnter your guess!")
         try:
@@ -210,6 +216,7 @@ def validate_player_guess(
     Takes in player guess and validates them
     and prints the grid with hits and misses
     """
+    # global variables to keep track of ships
     global cpu_ship_num
     row, col = player_guess
     row_index = row - 1
@@ -228,6 +235,7 @@ def validate_player_guess(
     print("|   |-' | |")
     print("`-' '   `-'")
     print(" ", end=" ")
+    # prints the grid with hits and misses
     for col in col_labels:
         print(col, end=" ")
     print()
@@ -243,6 +251,7 @@ def get_cpu_guess():
     """
     Generates CPU guesses
     """
+    # generates random guesses and adds them to a set
     while True:
         row = randint(1, 5)
         col = randint(1, 5)
@@ -264,16 +273,18 @@ def validate_cpu_guess(
     Takes in cpu guess and validates them
     and prints the grid with hits and misses
     """
+    # global variables to keep track of ships
     global p_ship_num
     row, col = cpu_guess
     row_index = row - 1
     col_index = col - 1
+    # checks to see if the guess has already been made
     if player_grid[row_index][col_index] == miss_symbol:
         get_cpu_guess()
     if player_grid[row_index][col_index] == ship_symbol:
         print("\nCPU Hit!")
         player_grid[row_index][col_index] = hit_symbol
-        player_ship_num -= 1
+        p_ship_num -= 1
     else:
         print("\nCPU Miss!")
         player_grid[row_index][col_index] = miss_symbol
@@ -281,6 +292,7 @@ def validate_cpu_guess(
     print("|-' |   |-|  |  |-  |( ")
     print("'   `-' ` '  `  `-' ' '")
     print("  ", end="")
+    # prints the grid with hits and misses
     for col in col_labels:
         print(col, end=" ")
     print()
@@ -296,6 +308,7 @@ def reset_game():
     """
     five second timer to reset the game
     """
+    # resets global variables
     global p_ship_num
     global cpu_ship_num
     p_ship_num = 3
@@ -308,6 +321,10 @@ def reset_game():
 
 
 def ship_message(owner, num):
+    """
+    Takes in the owner of the ships and the number of ships left
+    and returns correct message
+    """
     return f"{owner} has {num} {'ship' if num == 1 else 'ships'} left"
 
 
