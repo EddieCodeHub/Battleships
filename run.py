@@ -200,6 +200,8 @@ def get_player_guess():
         col = input("Enter column letter: \n").upper()
         if row not in range(1, 6) or col not in ["A", "B", "C", "D", "E"]:
             print("Invalid guess! Please try again")
+            print("\nPlease enter a number between 1 and 5 for the row.")
+            print("And either of these letters for the column (A, B, C, D, E)")
         else:
             player_guess = (row, col)
             return player_guess
