@@ -11,7 +11,7 @@ Visit the deployed application [here](https://battle-ships-project-65d0afe8ea39.
 ## Table of Contents
 - [User experience (UX)](#user-experience-ux)
     - [Project Goals](#project-goals)
-    - [User stories](#user-stories)
+    - [User Stories](#user-stories)
     - [Data Model](#data-model)
     - [Flowchart](#flowchart)
 
@@ -48,17 +48,47 @@ Visit the deployed application [here](https://battle-ships-project-65d0afe8ea39.
 
 ### Project Goals
 
-- Provide a fun guessing style game for a user to play against the computer
+- Provide a fun guessing style game for a user to play against the computer.
 
 - The game must feel fair to play.
 
+- The game should provide clear instruction on how to play.
+
 - There must be no game crashing bugs. the program should handle all invalid inputs appropriately.
 
-- The game should repeat when finished
+- The game should repeat when finished.
 
-### User stories
+### User Stories
+
+- As a user, I would like clear instruction on how to play the game.
+
+- As a user, i would like the game to be smooth and user friendly.
+
+- As a user, I would like to feel like i am playing a fair game.
+
+- As a user, I would like to be able to place my ships myself and make my own guesses.
+
+- As a user, I would like the game to not crash if I create an invalid input.
+
+- As a user, I would like the game to loop back around to the beginning when it is over.
 
 ### Data Model
+
+The initial data that is taken and processed is the players ship locations. Before they are taken from the user, the player grid is created
+as a place to store the ships. Then co-ordinates are taken from the player as an input, and converted into a cell on the grid.
+
+Before a ship is placed, the co-ordinates are validated and checked if they are unique. If they pass these tests, an 'S' symbol is placed 
+on its co-ordinate on the grid. This is repeated until the player has 3 ships placed. 
+
+After this, three unique co-ordintes are generated from a function beofre being validated. If they pass, the 'S' symbols are stored on the 'CPU board'
+however this board is not printed to the user, it is only used for checking for player hits later on. 
+Instead an empty "Shot board" is printed. This will store the 'hit' or 'miss' markers for the player too see.
+
+Then player input will be taken in co-ordinate form for the player guesses. These co-ordinates are validated to be on the board, then a function checks if the
+cell has already been chosen. If the tests are passes. The correct marker will be printed to the board.
+
+Finally, A CPU guess is randomly generated, validated, then added to a 'set' before being logged to the board. This is so each new
+CPU guess can be checked for 'uniqueness' as the game goes on. preventing to CPU guessing the same places more than once.
 
 ### Flowchart
 
