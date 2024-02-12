@@ -110,6 +110,8 @@ def get_ship_coordinates():
                 break
             else:
                 print("\nInvalid placement! Please try again")
+                print("\nPlease enter a number between 1 and 5 for the row.")
+                print("And either of these letters for the column (A, B, C, D, E)")
     return player_ship_coordinates
 
 
