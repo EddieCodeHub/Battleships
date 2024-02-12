@@ -92,17 +92,49 @@ CPU guess can be checked for 'uniqueness' as the game goes on. preventing to CPU
 
 ### Flowchart
 
+The Flowchart below was created using [Lucidchart](https://lucid.app/) to help plan the data-flow of this project.
+
+![Battleships Flowchart](/images/flow_chart.png)
+
 ## Features
 
 ### ASCII Art
 
+ASCII art is used throughout the project for Titles and lables for grids.
+
+I have chosen to use ASCII art as it adds visual appeal to the game.
+
+All ASCII art was generated using [ascii.co.uk](https://ascii.co.uk/)
+
+![Player ascii label](/images/player_ascii_label.png)
+
+![CPU ascii label](/images/cpu_ascii_label.png)
+
 ### Main Menu
+
+Give the user a choice between reading the rules, or starting the game.
+
+Allows people who already know the rules to have the choice to not see them again.
+
+![Battleships Main Menu Image](/images/main_menu_img.png)
 
 ### Rules
 
+Displays the rules for the user.
+
+![Battleships rules image](/images/battleship_rules_img.png)
+
 ### Player Ship Selection
 
+Takes users input as co-ordinates in order to place their ships.
+
+![Player ship placement image](/images/player_ship_placement.png)
+
 ### Player Ship Validation
+
+Checks if the co-ordinate given is a valid co-ordinate on the grid and handles invalid inputs
+
+![Player ship placement validation image](/images/player_placement_validation.png)
 
 ### Random CPU Ship Generator
 
