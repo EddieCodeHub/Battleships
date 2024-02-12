@@ -1,6 +1,6 @@
 # Battleships
 
-![Battleships Main Menu Image](../Battleships/images/main_menu_img.png)
+![Battleships Main Menu Image](/images/main_menu_img.png)
 
 Battleships is designed to be a fun guessing game that the user can play against the computer.
 The Game is designed with a 5x5 grid where the player can choose the location of their ships and make their own guesses.
