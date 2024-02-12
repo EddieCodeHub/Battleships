@@ -48,6 +48,14 @@ Visit the deployed application [here](https://battle-ships-project-65d0afe8ea39.
 
 ### Project Goals
 
+- Provide a fun guessing style game for a user to play against the computer
+
+- The game must feel fair to play.
+
+- There must be no game crashing bugs. the program should handle all invalid inputs appropriately.
+
+- The game should repeat when finished
+
 ### User stories
 
 ### Data Model
