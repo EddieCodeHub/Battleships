@@ -239,7 +239,7 @@ Keeps track of the amount of ships left for the Player and the CPU.
 
 - Before image:
 
-![Python linter first test image](/images/python%20validation%20before.png)
+![Python linter first test image](/images/python_validation_before_img.png)
 
 - Final validation image:
 
