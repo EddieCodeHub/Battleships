@@ -111,7 +111,7 @@ def get_ship_coordinates():
             else:
                 print("\nInvalid placement! Please try again")
                 print("\nPlease enter a number between 1 and 5 for the row.")
-                print("And either of these letters for the column (A, B, C, D, E)")
+                print("And any of these letters (A, B, C, D, E)")
     return player_ship_coordinates
 
 
@@ -228,6 +228,9 @@ def validate_player_guess(
     if shot_grid[row_index][col_index] == miss_symbol:
         print("\nYou already guessed that!")
         get_player_guess()
+    if shot_grid[row_index][col_index] == hit_symbol:
+        print("\nYou already guessed that!")
+        get_player_guess()
     if cpu_grid[row_index][col_index] == ship_symbol:
         print("\nHit!")
         shot_grid[row_index][col_index] = hit_symbol
@@ -284,6 +287,8 @@ def validate_cpu_guess(
     col_index = col - 1
     # checks to see if the guess has already been made
     if player_grid[row_index][col_index] == miss_symbol:
+        get_cpu_guess()
+    if player_grid[row_index][col_index] == hit_symbol:
         get_cpu_guess()
     if player_grid[row_index][col_index] == ship_symbol:
         print("\nCPU Hit!")
@@ -369,6 +374,8 @@ def main_loop():
         print(ship_message("Player", p_ship_num))
         print(ship_message("CPU", cpu_ship_num))
     if p_ship_num == 0:
+
+        # Game over screens
         print(".-. .-. .  . .-.   .-. . . .-. .-.")
         print(
             "|.. |-| |{}{}| |-    | | | | |-  |("
