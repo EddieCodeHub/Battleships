@@ -28,7 +28,7 @@ Visit the deployed application [here](https://battle-ships-project-65d0afe8ea39.
     - [Generate Unique CPU Guesses](#generate-unique-cpu-guesses)
     - [CPU Guess Validation](#cpu-guess-validation)
     - [Game Reset](#game-reset)
-    - [Generating "Ship's left" Message](#generating-ships-left-message)
+    - [Ship counter](#ship-counter)
 
 - [Technologies Used](#technologies-used)
     - [Language Used](#language-used)
@@ -127,45 +127,214 @@ Displays the rules for the user.
 ### Player Ship Selection
 
 Takes users input as co-ordinates in order to place their ships.
+This allows the user to choose where their ships are placed on the grid
 
 ![Player ship placement image](/images/player_ship_placement.png)
 
 ### Player Ship Validation
 
-Checks if the co-ordinate given is a valid co-ordinate on the grid and handles invalid inputs
+Checks if the player co-ordinates given is a valid co-ordinate on the grid and handles invalid inputs.
 
 ![Player ship placement validation image](/images/player_placement_validation.png)
 
 ### Random CPU Ship Generator
 
+Generates three unique co-ordinates at random to be used for the CPU ships.
+
 ### CPU Ship Validation
+
+Checks if the CPU co-ordinate given is a valid co-ordinate on the grid and handles invalid inputs.
 
 ### Processing Players Guesses
 
+This allows the user to take guesses at the CPU ships locations. 
+It takes players input co-ordinates and returns them to the program.
+
+![Player guess image](/images/player_guess_img.png)
+
 ### Player Guess Validation
+
+Checks if the player co-ordinate given is a valid co-ordinate on the grid and handles invalid inputs.
+
+![Input Validation Image](/images/invalid_letter_img.png)
 
 ### Generate Unique CPU Guesses
 
+Generates random unique co-ordinates, stores them in a set, then returns them to the program.
+Then in future moves, the set set is used to check if the new co-ordinate is unique
+
+![CPU guesses player ship location image](/images/cpu_guess_img.png)
+
 ### CPU Guess Validation
+
+Checks if the CPU co-ordinate given is a valid co-ordinate on the grid and handles invalid inputs.
 
 ### Game Reset
 
-### Generating "Ship's left" Message
+This causes the game to reset when it is finished, allowing the player to play again without restarting the program.
+
+![Game reset image](/images/restart_game_img.png)
+
+### Ship counter
+
+Keeps track of the amount of ships left for the Player and the CPU.
+
+![Ship counter image](/images/ship_counter_img.png)
 
 ## Technologies Used
 
 ### Languague Used
 
+- [Python3](https://www.python.org/)
+
 ### Frameworks, Libraries and Programs Used
+
+-[Virtual Studio code](https://code.visualstudio.com/) was used for writing my code, committing, and then pushing to github.
+
+-[GitHub](https://github.com/) was used to store my project after pushing.
+
+-[Heroku](https://id.heroku.com/login) was used to deploy the application.
+
+-[CI Python linter](https://pep8ci.herokuapp.com/#) was used to validate the python code.
+
+-[ASCII.co.uk](https://ascii.co.uk/) was used to create the ASCII art used in the application.
+
+-[Lucidchart](https://www.lucidchart.com/pages/) was used to create the flowchart.
 
 ## Testing
 
 ### Testing User Stories
 
+* As a user, I would like clear instruction on how to play the game.
+
+    - A rules option is given in the main menu.
+    - The rules provide clear instruction about how to play the game.
+    - The user is reminded of the correct inputs if the provide an incorrect input.
+
+* As a user, i would like the game to be smooth and user friendly.
+
+    - The runs without crashes.
+
+* As a user, I would like to feel like i am playing a fair game.
+    
+    - The CPU inputs are generated randomly.
+    - The CPU does not read user inputs for an advantage.
+
+* As a user, I would like to be able to place my ships myself and make my own guesses.
+
+    - The program allows the user to input their own ship locations
+
+* As a user, I would like the game to not crash if I create an invalid input.
+
+    - The program handles all invalid inputs without crasdhing the game.
+
+* As a user, I would like the game to loop back around to the beginning when it is over.
+
+    - The program has a reset function that resets back to the main menu after 5 seconds.
+    - This is triggered when the game is over.
+
 ### Code Validation
+
+- The [CI Python linter](https://pep8ci.herokuapp.com/#) was used to validate The code in this project.
+
+- Before image:
+
+![Python linter first test image](/images/python%20validation%20before.png)
+
+- Final validation image:
+
+![Pthon linter final image](/images/python_validaton_after_img.png)
 
 ### Manual Testing
 
+<table>
+    <tr>
+        <th>Feature</th>
+        <th>Outcome</th>
+        <th>Example</th>
+        <th>Pass/Fail</th>
+    </tr>
+    <tr>
+        <td>Main Menu Choice</td>
+        <td>Validate Incorrect input</td>
+        <td><img src="/images/invalid_menu_input_img.png" at="image of incorrect menu input validation"></td>
+        <td>pass</td>
+    </tr>
+    <tr>
+        <td rowspan=5>Player Ship Placement</td>
+        <td>Validate if number incorrect</td>
+        <td><img src="/images/invalid_ship_placement_number.png" alt="image of incorrect number validation for ship placements"></td>
+        <td>pass</td>
+    </tr>
+    <tr>
+        <td>Validate if letter in number input</td>
+        <td><img src="/images/placements_letter_in_number_validation.png" alt="image of letter in number input validation for ship placements"></td>
+        <td>pass</td>
+    </tr>
+    <tr>
+        <td>Validate if incorrect letter</td>
+        <td><img src="/images/placements_invalid_letter_validation.png" alt="image of incorrect letter validation for ship placements"></td>
+        <td>pass</td>
+    </tr>
+    <tr>
+        <td>Validate if number in letter input</td>
+        <td><img src="/images/number_in_letter_placement_validtion.png" alt="image of number in letter input validation for ship placements"></td>
+        <td>pass</td>
+    <tr>
+        <td>Validate repeated placement</td>
+        <td><img src="/images/placements_repeated_input_validation.png" alt="image of repeated ship placement validation"></td>
+        <td>pass</td>
+    </tr>
+    </tr>
+    <tr>
+        <td rowspan=5>Player Guesses</td>
+        <td>Validate if number incorrect</td>
+        <td><img src="/images/guesses_incorrect_number_validation.png" alt="image of incorrect number validation for player guesses"></td>
+        <td>pass</td>
+    </tr>
+    <tr>
+        <td>Validate if letter in number input</td>
+        <td><img src="/images/guesses_letter_in_number_validation.png" alt="image of letter in number input validation for player guesses"></td>
+        <td>pass</td>
+    </tr>
+    <tr>
+        <td>Validate if incorrect letter</td>
+        <td><img src="/images/guesses_incorrect_letter_validation.png" alt="mage of incorrect letter validation for player guesses"></td>
+        <td>pass</td>
+    </tr>
+    <tr>
+        <td>Validate if number in letter input</td>
+        <td><img src="/images/guesses_number_in_letter_validation.png" alt="image of number in letter input validation for player guesses"></td>
+        <td>pass</td>
+    </tr>
+    <tr>
+        <td>Validate if repeated guess</td>
+        <td><img src="/images/guesses_repeat_guess_validation.png" alt="image of empty input validation for player guesses"></td>
+        <td>pass</td>
+
+</table>
+
 ## Deployment
 
+The application has been deployed using [Heroku](https://id.heroku.com/) by following these steps:
+
+1. Create the requirements.txt file and run: `pip3 freeze > requirements.txt` in the console.
+2. Commit changes and push them to GitHub.
+3. Go to the Heroku's website.
+4. From the Heroku dashboard, click on "Create new app".
+5. Enter the "App name" and "Choose a region" before clicking on "Create app".
+6. Go to "Config Vars" under the "Settings" tab.
+7. Add the Config Var, KEY: PORT and VALUE: 8000.
+8. Go to "Buildpacks" section and click "Add buildpack".
+9. Select "python" and click "Save changes"
+10. Add "nodejs" buildpack as well using the same process.
+11. Go to "Deployment method", under the "Deploy" tab select "GitHub" and click on "Connect to GitHub".
+12. Go to "Connect to GitHub" section and "Search" the repository to be deployed.
+13. Click "Connect" next the repository name.
+14. Choose "Automatic deploys" or "Manual deploys" to deploy your application.
+
 ## Credits
+
+- co-pilot was used for idea inspiration and code suggestions for creating grids with letter and number co-ordinates. Also used to better understand code.
+
+- ASCII.co.uk was used to generate all ASCII art in the project
